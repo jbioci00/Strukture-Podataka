@@ -1,0 +1,6 @@
+Marin	Marinovic	74
+Ante	Antic	48
+Iva	Ivic	56
+Pere	Peric	22
+Ivan Ivanovic	86
+Ana	Anic	67
