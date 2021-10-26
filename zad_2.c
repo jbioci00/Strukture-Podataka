@@ -23,17 +23,14 @@ int DeleteAfter(Position head, char* surname);
 
 int main(int argc, char** argv)
 {	
-	
-	Position first = CreatePerson("Iva", "Ivic", 2001);
-	Position second = CreatePerson("Marin", "Marinovic", 2002);
-	Position third = CreatePerson("Ante", "Antic", 2000);
-	Person Head = { .next = first, .name = {0}, .surname = {0}, .birthYear = 0 };
+	Person Head = { .next = NULL, .name = {0}, .surname = {0}, .birthYear = 0 };
 	Position p = &Head;
-	first->next = second;
-	second->next = third;																		//PRIMJER BRISANJA 2. osobe!
+	AppendList(p, "Iva", "Ivic", 2001);
+	AppendList(p, "Marko", "Markic", 2002);
+	AppendList(p, "Ante", "Antic", 2003);
 
-	DeleteAfter(p, second->surname);
-	PrintList(first);
+	DeleteAfter(p, "Ivic");
+	PrintList(p->next);		//primjer brisanja clana liste "Ivic"
 
 	return EXIT_SUCCESS;
 }
