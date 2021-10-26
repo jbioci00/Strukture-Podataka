@@ -31,6 +31,7 @@ int main(int argc, char** argv)
 
 	DeleteAfter(p, "Ivic");
 	PrintList(p->next);		//primjer brisanja clana liste "Ivic"
+	jakovveeeeeeeeeeeeeee
 
 	return EXIT_SUCCESS;
 }
