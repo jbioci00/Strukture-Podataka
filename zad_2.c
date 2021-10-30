@@ -18,19 +18,19 @@ int InsertAfter(Position position, Position newPerson);
 Position FindLast(Position head);
 int AppendList(Position head, char* name, char* surname, int birthYear);
 int FindBySurname(Position first, char* surname);
-Position FindBefore(Position head, Position first);
+Position FindBefore(Position first, char* surname);
 int DeleteAfter(Position head, char* surname);
 
 int main(int argc, char** argv)
-{	
+{
 	Person Head = { .next = NULL, .name = {0}, .surname = {0}, .birthYear = 0 };
 	Position p = &Head;
 	AppendList(p, "Iva", "Ivic", 2001);
 	AppendList(p, "Marko", "Markic", 2002);
 	AppendList(p, "Ante", "Antic", 2003);
 
-	DeleteAfter(p, "Ivic");
-	PrintList(p->next);		//primjer brisanja clana liste "Ivic"
+	DeleteElement(p, "Markic");
+	PrintList(p->next);		//primjer brisanja clana liste "Markic"
 
 	return EXIT_SUCCESS;
 }
@@ -126,27 +126,28 @@ int FindBySurname(Position first, char* surname)
 	return NULL;
 }
 
-Position FindBefore(Position head, Position first)
+Position FindBefore(Position first, char* surname)
 {
-	Position temp1 = head;
-	Position temp = first;
-	while (temp1)
+	Position temp1 = first;
+	char* temp_surname = surname;
+	Position temp2 = FindBySurname(temp1, temp_surname);
+	while (temp1) 
 	{
-		if (temp1->next == temp){
+		if (temp1->next == temp2)
 			return temp1;
-		}
 		temp1 = temp1->next;
 	}
+	
 	return NULL;
 }
-int DeleteAfter(Position head, char* surname)
+int DeleteElement(Position head, char* surname)
 {
-	char* tsurname = surname;
-	Position t3 = head;
-	Position temp = FindBySurname(t3, tsurname);
-	Position temp1 = FindBefore(t3, temp);
-	temp1->next = temp->next;
-	free(temp);
+	char* temp_surname = surname;
+	Position temp1 = head;
+	Position temp2 = FindBySurname(temp1, temp_surname);
+	Position temp3 = FindBefore(temp1->next, surname);
+	temp3->next = temp2->next;
+	free(temp2);
 
 	return 0;
 }
