@@ -50,7 +50,6 @@ int InsToListFromFile(PosL head, char* fileName) {
     FILE* f = NULL;
     f = fopen(fileName, "r");
     char ime_drzave[MAX_NAME] = { 0 };
-    char buffer[MAX_NAME] = { 0 };
     char grad[MAX_NAME] = { 0 };
 
     drzava t = { .ime_drzave = "", .grad = NULL, .next = NULL };
@@ -104,7 +103,8 @@ int SortedInputList(PosL head, PosL NewEl) {
     PosL temp = NULL;
     temp = head->next;
 
-    while (temp != NULL && strcmp(temp->ime_drzave, NewEl->ime_drzave) > 0) { //ne triba next isprid temp!!
+    while (temp != NULL && strcmp(temp->ime_drzave, NewEl->ime_drzave) > 0) 
+    {
         temp = temp->next;
     }
 
