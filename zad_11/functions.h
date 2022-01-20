@@ -42,6 +42,6 @@ int ReadFromFile(Hash h, char* txtfile);
 PosT InsToTree(PosL root, char* txtfile);
 int Print(PosL head);
 int PrintTree(PosT root);
-/*int Delete(PosL head);
+int Delete(PosL head);
 int DelTree(PosT root);
-int Pop(PosL head);*/
+//int Pop(PosL head);

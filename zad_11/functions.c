@@ -6,7 +6,7 @@
 
 int EmptyListElement(PosL q)
 {
-	strcpy(q->ime_drzave, "empty");
+	strcpy(q->ime_drzave, " ");
 	q->next = NULL;
 	q->root = NULL;
 	return 0;
@@ -46,7 +46,7 @@ PosL InsertToHashT(Hash h, char* ime_drzave)
 	}
 	mod = sum % 11;
 	remb = h->root[mod];
-	
+
 	return SortedListInput(remb, ime_drzave);
 }
 PosL InsertAfter(PosL current, PosL next)
@@ -58,7 +58,7 @@ PosL InsertAfter(PosL current, PosL next)
 
 PosL SortedListInput(PosL root, char* ime_drzave)
 {
-	
+
 	PosL q = CreateListElement(ime_drzave);
 	while (root->next != NULL && strcmp(root->next->ime_drzave, ime_drzave) > 0) {
 		root = root->next;
@@ -71,8 +71,8 @@ PosT SortedTreeInput(PosT root, PosT NewEl)
 
 	if (!root)
 	{
-	root = NewEl;
-	return root;
+		root = NewEl;
+		return root;
 	}
 	if (root->broj_stanovnika < NewEl->broj_stanovnika) {
 		root->right = SortedTreeInput(root->right, NewEl);
@@ -109,6 +109,7 @@ int ReadFromFile(Hash h, char* txtfile)
 			x = InsToTree(q, ime_dat);
 		}
 	}
+	fclose(f);
 	return 0;
 }
 
@@ -124,58 +125,69 @@ PosT InsToTree(PosL root, char* txtfile)
 		perror("Problem u datoteci!");
 		return -1;
 	}
-	while (fgets(buffer,MAX_LINE, k)) {
+	while (fgets(buffer, MAX_LINE, k)) {
 		s = sscanf(buffer, " %s %d", ime_grada, &broj_stanovnika);
 		if (s == 2) {
 			PosT q = CreateTreeElement(ime_grada, broj_stanovnika);
 			root->root = SortedTreeInput(root->root, q);
 		}
 	}
+	fclose(k);
 	return root;
 }
 
 int Print(PosL head)
 {
-	while (head->next) {
-		printf("%s\n", head->next->ime_drzave);
-		PrintTree(head->next->root);
-		head->next = head->next->next;
+	PosL temp = head->next;
+	while (temp) {
+		printf("%s\n", temp->ime_drzave);
+		PrintTree(temp->root);
+		temp = temp->next;
 	}
 	return 0;
 }
 int PrintTree(PosT root)
 {
-	if (!root) {
-		return 0;
+	if (root->right) {
+		PrintTree(root->right);
 	}
-
-	PrintTree(root->right);
 	printf("\t\t%s, %d stanovnika\n", root->ime_grada, root->broj_stanovnika);
-	PrintTree(root->left);
-
+	if (root->left) {
+		PrintTree(root->left);
+	}
 	return 0;
 }
-/*int Delete(PosL head)
+int Delete(PosL head)
 {
-	while (head->next){
+	PosL temp2 = head;
+	PosL temp = NULL;
+	while (head->next) {
+		temp = head->next;
 		DelTree(head->next->root);
-		Pop(head);
+		head->next = head->next->next;
+		free(temp);
+
 	}
+	free(temp2);
 	return 0;
 }
 int DelTree(PosT root)
 {
-	if (!root) return 0;
-	DelTree(root->left);
-	DelTree(root->right);
+	if (!root)
+		return 0;
+	if (root->left)
+		DelTree(root->left);
+	if (root->right)
+		DelTree(root->right);
 	free(root);
 	return 0;
 }
-int Pop(PosL head)
-{
-	PosL temp = head->next;
 
-	head->next = temp->next;
-	free(temp);
-	return 0;
+/*int Pop(PosL head)
+{
+PosL temp = head->next;
+
+head->next = temp->next;
+free(temp);
+return 0;
 }*/

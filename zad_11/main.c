@@ -13,5 +13,10 @@ int main()
 	for (i = 0; i < HASH_SIZE; i++) {
 		Print(h->root[i]);
 	}
+	for (i = 0; i < HASH_SIZE; i++) {
+		Delete(h->root[i]);
+	}
+
+	free(h);
 	return 0;
 }
